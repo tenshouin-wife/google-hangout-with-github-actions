@@ -19,9 +19,10 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     - name: Google Chat Notification
+      id: google-chat
       run: |
           curl -L --request POST '${{ secrets.WEBHOOK }}' \
           -H 'Content-Type: application/json' \
           --data-raw '{
-              "text": "${{job.status}}: Job , ${{github.job}} [${{github.run_id}}]"
+              "text": "${{job.status}}: Job , ${{github.repository}}/${{github.head_ref}} [${{github.run_number}}]\n More info at: (${{ steps.google-chat.outputs.url_output }})"
           }'
