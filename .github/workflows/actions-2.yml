@@ -23,5 +23,5 @@ jobs:
           curl -L --request POST '${{ secrets.WEBHOOK }}' \
           -H 'Content-Type: application/json' \
           --data-raw '{
-              "text": "${{job.status}}: Job \'${{github.job}} [${{github.run_id}}]\'"
+              "text": "${{job.status}}: Job , ${{github.job}} [${{github.run_id}}]"
           }'
