@@ -24,5 +24,5 @@ jobs:
           curl -L --request POST '${{ secrets.WEBHOOK }}' \
           -H 'Content-Type: application/json' \
           --data-raw '{
-              "text": "${{job.status}}: Job , ${{ github.event.repository.name }}/${{github.ref}} [${{github.run_number}}]\n More info at: (${{ steps.google-chat.outputs.url_output }})"
+              "text": "${{job.status}}: Job , ${{ github.event.repository.name }}///${{github.ref}} [${{github.run_number}}]\n More info at: (${{ steps.google-chat.outputs.url_output }})"
           }'
