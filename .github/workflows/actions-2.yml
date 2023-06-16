@@ -18,11 +18,21 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+    - name: hello
+      run:  |
+          curl -L --request POST '${{ secrets.WEBHOOK }}' \
+          -H 'Content-Type: application/json' \
+          --data-raw '{
+              "text": "${{job.status}}: \'job \"${{github.event.repository.name}}/${{github.ref_name}} [${{github.run_number}}]\"\n More info at: (${{github.server_url}}/${{github.repository}}/commit/${{github.sha}}/checks)"
+          }' 
+    
+    
     - name: Google Chat Notification
       id: google-chat
       run: |
           curl -L --request POST '${{ secrets.WEBHOOK }}' \
           -H 'Content-Type: application/json' \
           --data-raw '{
-              "text": "<b>${{job.status}}</b>: job \"${{github.event.repository.name}}/${{github.ref_name}} [${{github.run_number}}]\"\n More info at: (https://github.com/${{github.repository}}/commit/${{github.sha}}/checks)"
+              "text": "${{job.status}}: job \"${{github.event.repository.name}}/${{github.ref_name}} [${{github.run_number}}]\"\n More info at: (${{github.server_url}}/${{github.repository}}/commit/${{github.sha}}/checks)"
           }'
+      if: ${{ always() }}    
